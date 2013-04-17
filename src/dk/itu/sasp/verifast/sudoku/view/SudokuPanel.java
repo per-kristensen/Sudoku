@@ -2,11 +2,13 @@ package dk.itu.sasp.verifast.sudoku.view;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.io.ObjectInputStream.GetField;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 import dk.itu.sasp.verifast.sudoku.controller.SudokuController;
+import dk.itu.sasp.verifast.sudoku.model.SudokuGame;
 
 public class SudokuPanel extends JPanel {
 	private Field[][] fields;
@@ -16,28 +18,53 @@ public class SudokuPanel extends JPanel {
 		super(new GridLayout(3, 3));
 
 		panels = new JPanel[3][3];
-		for (int y = 0; y < 3; y++) {
-			for (int x = 0; x < 3; x++) {
-				panels[y][x] = new JPanel(new GridLayout(3, 3));
-				panels[y][x].setBorder(BorderFactory
+		for (int x = 0; x < 3; x++) {
+			for (int y = 0; y < 3; y++) {
+				panels[x][y] = new JPanel(new GridLayout(3, 3));
+				panels[x][y].setBorder(BorderFactory
 						.createLineBorder(Color.DARK_GRAY));
-				add(panels[y][x]);
+				add(panels[x][y]);
 			}
 		}
 
 		fields = new Field[9][9];
 		for (int y = 0; y < 9; y++) {
 			for (int x = 0; x < 9; x++) {
-				fields[y][x] = new Field(x, y);
-				panels[y / 3][x / 3].add(fields[y][x]);
+				fields[x][y] = new Field(x, y);
+				panels[y / 3][x / 3].add(fields[x][y]);
+			}
+		}
+	}
+
+	public void setNumber(int x, int y, int number) {
+		fields[x][y].setText("" + number);
+	}
+
+	public void setGame(SudokuGame game) {
+		for (int x = 0; x < 9; x++) {
+			for (int y = 0; y < 9; y++) {
+				fields[x][y].setText(game.getNumber(x, y) == 0 ? "" : ""
+						+ game.getNumber(x, y));
+				fields[x][y].setBackground(Color.WHITE);
 			}
 		}
 	}
 
 	public void addActionListeners(SudokuController sudokuController) {
-		for (int y = 0; y < 9; y++) {
-			for (int x = 0; x < 9; x++) {
-				fields[y][x].addActionListener(sudokuController);
+		for (int x = 0; x < 9; x++) {
+			for (int y = 0; y < 9; y++) {
+				fields[x][y].addActionListener(sudokuController);
+			}
+		}
+	}
+
+	public void checkGame(boolean[][] checkGame) {
+		for (int x = 0; x < 9; x++) {
+			for (int y = 0; y < 9; y++) {
+				if (checkGame[x][y] == false)
+					fields[x][y].setBackground(Color.RED);
+				else
+					fields[x][y].setBackground(Color.WHITE);
 			}
 		}
 	}
