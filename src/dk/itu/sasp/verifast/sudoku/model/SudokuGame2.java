@@ -139,13 +139,17 @@ public class SudokuGame2 {
 	}
 
 	private boolean isValidBlockBoard(int[] game) {
-		// TODO Auto-generated method stub
-
-		//while start index < N * N
-		//increase startIndex by ?
-		//get the block indices
-		//for each block
-		//check if the array consists of unique numbers
+		int row = 0;
+		int groupIndex = 0;
+		int sqrtN = (int) Math.sqrt(N);
+		while (groupIndex < N * N) {
+			row = groupIndex * sqrtN * N;
+			for (int first = row; (first + 1) % 9 != 0; first += sqrtN) {
+				//get block indicies starting from "first"
+				//check if the array is valid
+			}
+			groupIndex++;
+		}
 		return false;
 	}
 
