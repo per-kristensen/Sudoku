@@ -153,9 +153,10 @@ public class SudokuGame2 {
 	//Zeroes are ignored
 	private boolean uniqueNumbers(int[] array) {
 		Arrays.sort(array);
-		for (int i = 0; i < N; i++) {
-			if (array[i % N] != 0 && array[(i + 1) % N] != 0
-					&& array[i % N] == array[(i + 1) % N]) {
+		for (int i = 0; i < array.length; i++) {
+			if (array[i % array.length] != 0
+					&& array[(i + 1) % array.length] != 0
+					&& array[i % array.length] == array[(i + 1) % array.length]) {
 				return false;
 			}
 		}
