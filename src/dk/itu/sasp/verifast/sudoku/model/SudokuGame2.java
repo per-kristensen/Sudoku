@@ -6,10 +6,11 @@ public class SudokuGame2 {
 
 	private final int N = 9;
 	private int[] game;
-
+	private int mainY;
+//@ predicate isValidHorizontalMove(int y) = N |-> ?n &*& game |-> ?g &*& mainY |-> y &*& array_slice(g,n*y,n*(y+1),_);
 	public SudokuGame2()
 	// possible precondition - N <= sqrt(int.Max)
-	//@ requires N |-> ?n &*& n*n >0 &*& n>0;
+	//@ requires true;// N |-> ?n &*& n*n >0 &*& n>0;
 	//@ ensures true;
 	{
 		game = new int[N * N];
@@ -17,7 +18,7 @@ public class SudokuGame2 {
 
 	//Methods for determining if a move is valid	
 	private boolean isValidMove(int x, int y, int number)
-	//@ requires N |-> ?n &*& x > -1 &*& x < n &*& y > -1 &*& y < n;
+	//@ requires false; //N |-> ?n &*& x > -1 &*& x < n &*& y > -1 &*& y < n;
 	//@ ensures true;
 	{
 		return isValidHorizontalMove(y, number)
@@ -27,16 +28,12 @@ public class SudokuGame2 {
 
 	//Valid horizontal move
 	private boolean isValidHorizontalMove(int y, int number)
-	/*
-	 * @ requires N |-> ?n &*& game |-> ?g &*& 0 < number &*& number <= n &*& 0
-	 * < y &*& y < n &*& array_slice(g,0,n*n,_) &*& array_element(g,_,_);
-	 * 
-	 * @
-	 */
-	//@ ensures true;
+	
+	//@ requires 0 <= y &*& y < 9 &*& isValidHorizontalMove(y);// &*& array_element(g, y*n, _);
+	//@ ensures N |-> n &*& game |-> g &*& array_slice(g,n*y,n*(y+1),_);
 	{
 		for (int i = y * N; i < (y + 1) * N; i++)
-		//@ invariant N |-> n &*& game |-> g &*& array_element(g,i,_);//array_slice(g,0,n*n,_) &*& g[i] |-> _;
+		//@ invariant N |-> n &*& game |-> g &*& i>=y*n &*& array_slice(g,n*y,n*(y+1),_); // &*& g[i] |-> _;
 		{
 			if (game[i] == number) {
 				return false;
@@ -75,11 +72,17 @@ public class SudokuGame2 {
 	}
 
 	//Returns the index in one-dimensional array corresponding to x and y coordinates
-	private int getIndex(int x, int y) {
+	private int getIndex(int x, int y) 
+	//@requires false;
+	//@ ensures true;
+	{
 		return x + y * N;
 	}
 
-	private int getBlockStartIndex(int index) {
+	private int getBlockStartIndex(int index)
+	//@requires false;
+	//@ ensures true;
+	  {
 		// 1. get the correct column
 		index = index - (index % N);
 		// 2. get the correct row
@@ -87,7 +90,10 @@ public class SudokuGame2 {
 		return index;
 	}
 
-	private int[] getBlockIndicies(int blockStartIndex) {
+	private int[] getBlockIndicies(int blockStartIndex)
+	//@requires false;
+	//@ ensures true;
+	  {
 		int[] indicies = new int[N];
 		int sqrtN = (int) Math.sqrt(N);
 		for (int i = 0; i < indicies.length; i++) {
@@ -101,12 +107,18 @@ public class SudokuGame2 {
 	}
 
 	//Methods for determining if a board is valid
-	private boolean isValidBoard(int[] game) {
+	private boolean isValidBoard(int[] game)
+	//@requires false;
+	//@ ensures true;
+	  {
 		return isValidHorizontalBoard(game) && isValidVerticalBoard(game)
 				&& isValidBlockBoard(game);
 	}
 
-	private boolean isValidHorizontalBoard(int[] game) {
+	private boolean isValidHorizontalBoard(int[] game)
+	//@requires false;
+	//@ ensures true;
+	  {
 		int start = 0;
 		int end = 0;
 		while (end < N * N) {
@@ -120,7 +132,10 @@ public class SudokuGame2 {
 		return true;
 	}
 
-	private boolean isValidVerticalBoard(int[] game) {
+	private boolean isValidVerticalBoard(int[] game)
+	//@requires false;
+	//@ ensures true;
+	  {
 		int[] column;
 		int x = 0;
 		int y = 0;
@@ -139,7 +154,10 @@ public class SudokuGame2 {
 		return true;
 	}
 
-	private boolean isValidBlockBoard(int[] game) {
+	private boolean isValidBlockBoard(int[] game) 
+	//@requires false;
+	//@ ensures true;
+	{
 		int firstStartIndex = 0;
 		int currentStartIndex = 0;
 		int sqrtN = (int) Math.sqrt(N);
@@ -163,7 +181,10 @@ public class SudokuGame2 {
 
 	//Returns true if the array has unique numbers in the range 1-9
 	//Zeroes are ignored
-	private boolean uniqueNumbers(int[] array) {
+	private boolean uniqueNumbers(int[] array)
+	//@requires false;
+	//@ ensures true;
+	  {
 		Arrays.sort(array);
 		int current, next;
 		for (int i = 0; i < array.length; i++) {
