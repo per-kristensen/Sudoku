@@ -140,16 +140,23 @@ public class SudokuGame2 {
 	}
 
 	private boolean isValidBlockBoard(int[] game) {
-		int row = 0;
-		int groupIndex = 0;
+		int firstStartIndex = 0;
+		int currentStartIndex = 0;
 		int sqrtN = (int) Math.sqrt(N);
-		while (groupIndex < N * N) {
-			row = groupIndex * sqrtN * N;
-			for (int first = row; (first + 1) % N != 0; first += sqrtN) {
-				//get block indicies starting from "first"
-				//check if the array is valid
-			}
-			groupIndex++;
+		while (currentStartIndex < N * N) {
+			//traverse all the blocks on the row
+			currentStartIndex = firstStartIndex;
+			do {
+				int[] blockIndicies = getBlockIndicies(currentStartIndex);
+				int[] blockValues = new int[blockIndicies.length];
+				for (int i = 0; i < blockIndicies.length; i++) {
+					blockValues[i] = game[blockIndicies[i]];
+				}
+				currentStartIndex += sqrtN;//move to the next block start index
+			} while (currentStartIndex % N != 0);
+
+			//move the start index to the next blocks row
+			firstStartIndex += N * sqrtN;
 		}
 		return false;
 	}
@@ -162,7 +169,9 @@ public class SudokuGame2 {
 		for (int i = 0; i < array.length; i++) {
 			current = array[i % array.length];
 			next = array[(i + 1) % array.length];
-			if ((current != 0 && next != 0 && current == next) || current > N) {
+
+			if ((current != 0 && next != 0 && current == next) || current < 0
+					|| current > N) {
 				return false;
 			}
 		}
