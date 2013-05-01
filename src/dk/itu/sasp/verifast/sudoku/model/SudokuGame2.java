@@ -42,6 +42,24 @@ public class SudokuGame2 {
 		}
 		return true;
 	}
+	
+	//Valid horizontal move - ALTERNATIVE
+	private boolean isValidHorizontal(int y, int number)
+	/*@ requires N |-> ?n &*& game |-> ?g &*& 
+	   	0 < number &*& number <= n &*& 0 < y &*& y < n &*&
+	   	array_slice(g,0,n*n,_) &*& array_element(g,_,_);
+	   	@*/
+	    //@ ensures true;
+	{
+		for (int i = y * N; i < (y + 1) * N; i++)
+		//@ invariant N |-> n &*& game |-> g &*& array_element(g,i,_);//array_slice(g,0,n*n,_) &*& g[i] |-> _;
+		{
+			if (game[i] == number) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 	//Valid vertical move
 	private boolean isValidVerticalMove(int x, int number)
@@ -55,6 +73,19 @@ public class SudokuGame2 {
 				return false;
 			}
 			y += N;
+		}
+		return true;
+	}
+	
+	//Valid vertical move - ALTERNATIVE
+	private boolean isValidVertical(int x, int number)
+	//@requires false;
+	//@ensures true;
+	{
+		for (int i = x; i < game.length; i += N) {
+			if (game[i] == number) {
+				return false;
+			}
 		}
 		return true;
 	}
