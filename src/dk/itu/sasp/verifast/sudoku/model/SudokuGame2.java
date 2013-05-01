@@ -27,29 +27,13 @@ public class SudokuGame2 {
 
 	//Valid horizontal move
 	private boolean isValidHorizontalMove(int y, int number)
-	//@ requires N |-> ?n &*& y > -1 &*& y < n;
+	/*
+	 * @ requires N |-> ?n &*& game |-> ?g &*& 0 < number &*& number <= n &*& 0
+	 * < y &*& y < n &*& array_slice(g,0,n*n,_) &*& array_element(g,_,_);
+	 * 
+	 * @
+	 */
 	//@ ensures true;
-	{
-		//get the beginning of the row
-		int x = getIndex(0, y);
-		while ((x + 1) % N != 0)
-		//@ invariant true;
-		{
-			if (game[x] == number) {
-				return false;
-			}
-			x++;
-		}
-		return true;
-	}
-	
-	//Valid horizontal move - ALTERNATIVE
-	private boolean isValidHorizontal(int y, int number)
-	/*@ requires N |-> ?n &*& game |-> ?g &*& 
-	   	0 < number &*& number <= n &*& 0 < y &*& y < n &*&
-	   	array_slice(g,0,n*n,_) &*& array_element(g,_,_);
-	   	@*/
-	    //@ ensures true;
 	{
 		for (int i = y * N; i < (y + 1) * N; i++)
 		//@ invariant N |-> n &*& game |-> g &*& array_element(g,i,_);//array_slice(g,0,n*n,_) &*& g[i] |-> _;
@@ -63,22 +47,6 @@ public class SudokuGame2 {
 
 	//Valid vertical move
 	private boolean isValidVerticalMove(int x, int number)
-	//@ requires N |-> ?n &*& x > -1 &*& x < n;
-	//@ ensures x > -1 &*& x < n;
-	{
-		//get the beginning of the column
-		int y = getIndex(x, 0);
-		while (y < N * N) {
-			if (game[y] == number) {
-				return false;
-			}
-			y += N;
-		}
-		return true;
-	}
-	
-	//Valid vertical move - ALTERNATIVE
-	private boolean isValidVertical(int x, int number)
 	//@requires false;
 	//@ensures true;
 	{
@@ -95,7 +63,8 @@ public class SudokuGame2 {
 	//@ requires true;
 	//@ ensures true;
 	{
-		int blockStartIndex = getBlockStartIndex(getIndex(x, y));
+		int index = getIndex(x, y);
+		int blockStartIndex = getBlockStartIndex(index);
 		int[] blockIndicies = getBlockIndicies(blockStartIndex);
 		for (int i = 0; i < blockIndicies.length; i++) {
 			if (number == game[blockIndicies[i]]) {
@@ -120,9 +89,10 @@ public class SudokuGame2 {
 
 	private int[] getBlockIndicies(int blockStartIndex) {
 		int[] indicies = new int[N];
+		int sqrtN = (int) Math.sqrt(N);
 		for (int i = 0; i < indicies.length; i++) {
 			indicies[i] = blockStartIndex;
-			for (int j = 0; j < Math.sqrt(N); j++) {
+			for (int j = 0; j < sqrtN; j++) {
 				blockStartIndex++;
 			}
 			blockStartIndex += N;
@@ -175,7 +145,7 @@ public class SudokuGame2 {
 		int sqrtN = (int) Math.sqrt(N);
 		while (groupIndex < N * N) {
 			row = groupIndex * sqrtN * N;
-			for (int first = row; (first + 1) % 9 != 0; first += sqrtN) {
+			for (int first = row; (first + 1) % N != 0; first += sqrtN) {
 				//get block indicies starting from "first"
 				//check if the array is valid
 			}
@@ -188,10 +158,11 @@ public class SudokuGame2 {
 	//Zeroes are ignored
 	private boolean uniqueNumbers(int[] array) {
 		Arrays.sort(array);
+		int current, next;
 		for (int i = 0; i < array.length; i++) {
-			if (array[i % array.length] != 0
-					&& array[(i + 1) % array.length] != 0
-					&& array[i % array.length] == array[(i + 1) % array.length]) {
+			current = array[i % array.length];
+			next = array[(i + 1) % array.length];
+			if ((current != 0 && next != 0 && current == next) || current > N) {
 				return false;
 			}
 		}
