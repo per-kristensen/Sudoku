@@ -7,8 +7,12 @@ public class SudokuGame2 {
 	private final int N = 9;
 	private int[] game;
 	private int mainY;
+	private int mainX;
+	private int mainNumber;
 //@ predicate isValidHorizontalMove(int y) = N |-> ?n &*& game |-> ?g &*& mainY |-> y &*& array_slice(g,n*y,n*(y+1),_);
-	public SudokuGame2()
+//@ predicate isValidMove(int x, int y, int number) = mainX |-> x &*& mainY |-> y &*& mainNumber |-> number &*& isValidHorizontalMove(y);
+
+public SudokuGame2()
 	// possible precondition - N <= sqrt(int.Max)
 	//@ requires true;// N |-> ?n &*& n*n >0 &*& n>0;
 	//@ ensures true;
@@ -18,8 +22,8 @@ public class SudokuGame2 {
 
 	//Methods for determining if a move is valid	
 	private boolean isValidMove(int x, int y, int number)
-	//@ requires false; //N |-> ?n &*& x > -1 &*& x < n &*& y > -1 &*& y < n;
-	//@ ensures true;
+	//@ requires isValidMove(x,y,number); //N |-> ?n &*& x > -1 &*& x < n &*& y > -1 &*& y < n;
+	//@ ensures isValidMove(x,y,number);
 	{
 		return isValidHorizontalMove(y, number)
 				&& isValidVerticalMove(x, number)
@@ -29,11 +33,11 @@ public class SudokuGame2 {
 	//Valid horizontal move
 	private boolean isValidHorizontalMove(int y, int number)
 	
-	//@ requires 0 <= y &*& y < 9 &*& isValidHorizontalMove(y);// &*& array_element(g, y*n, _);
-	//@ ensures N |-> n &*& game |-> g &*& array_slice(g,n*y,n*(y+1),_);
+	//@ requires 0 <= y &*& y < 9 &*&  N |-> ?n &*& game |-> ?g &*& mainY |-> y &*& array_slice(g,n*y,n*(y+1),_); //isValidHorizontalMove(y);
+	//@ ensures isValidHorizontalMove(y); //N |-> n &*& game |-> g &*& array_slice(g,n*y,n*(y+1),_);
 	{
 		for (int i = y * N; i < (y + 1) * N; i++)
-		//@ invariant N |-> n &*& game |-> g &*& i>=y*n &*& array_slice(g,n*y,n*(y+1),_); // &*& g[i] |-> _;
+		//@ invariant N |-> n &*& game |-> g &*& mainY |-> y &*& i>=y*n &*& array_slice(g,n*y,n*(y+1),_);
 		{
 			if (game[i] == number) {
 				return false;
