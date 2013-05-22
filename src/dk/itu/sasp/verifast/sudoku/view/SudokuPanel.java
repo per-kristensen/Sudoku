@@ -7,7 +7,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 import dk.itu.sasp.verifast.sudoku.controller.SudokuController;
-import dk.itu.sasp.verifast.sudoku.model.SudokuGame;
+import dk.itu.sasp.verifast.sudoku.model.Board;
 
 public class SudokuPanel extends JPanel {
 	private Field[][] fields;
@@ -39,12 +39,12 @@ public class SudokuPanel extends JPanel {
 		fields[x][y].setText("" + number);
 	}
 
-	public void setGame(SudokuGame game) {
+	public void setGame(Board game) {
 		for (int x = 0; x < 9; x++) {
 			for (int y = 0; y < 9; y++) {
-				fields[x][y].setText(game.getNumber(x, y) == 0 ? "" : ""
-						+ game.getNumber(x, y));
-				fields[x][y].setBackground(Color.WHITE);
+				// fields[x][y].setText(game.getNumber(x, y) == 0 ? "" : "" +
+				// game.getNumber(x, y));
+				// fields[x][y].setBackground(Color.WHITE);
 			}
 		}
 	}

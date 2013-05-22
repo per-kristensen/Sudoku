@@ -5,15 +5,15 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JMenuItem;
 
-import dk.itu.sasp.verifast.sudoku.model.SudokuGame;
+import dk.itu.sasp.verifast.sudoku.model.Board;
 import dk.itu.sasp.verifast.sudoku.view.Field;
 import dk.itu.sasp.verifast.sudoku.view.SudokuPanel;
 
 public class SudokuController implements ActionListener {
 	private SudokuPanel sudokuPanel;
-	private SudokuGame game;
+	private Board game;
 
-	public SudokuController(SudokuPanel sudokuPanel, SudokuGame game) {
+	public SudokuController(SudokuPanel sudokuPanel, Board game) {
 		this.sudokuPanel = sudokuPanel;
 		this.game = game;
 	}
@@ -27,15 +27,14 @@ public class SudokuController implements ActionListener {
 			int y = field.getFieldY();
 			int number = Integer.parseInt(field.getText());
 
-			//TODO
+			// TODO - calls to Board
 
 		} else if (source instanceof JMenuItem) {
 			String menuItemText = ((JMenuItem) source).getText();
 			if (menuItemText.equalsIgnoreCase("new game")) {
-				//TODY
-				System.out.println(game.printSolution());
+				// TODO
 			} else if (menuItemText.equalsIgnoreCase("check game")) {
-				//TODO
+				// TODO
 			}
 
 		}

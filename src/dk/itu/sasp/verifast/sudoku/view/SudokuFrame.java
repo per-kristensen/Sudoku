@@ -9,7 +9,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import dk.itu.sasp.verifast.sudoku.controller.SudokuController;
-import dk.itu.sasp.verifast.sudoku.model.SudokuGame;
+import dk.itu.sasp.verifast.sudoku.model.Board;
 
 public class SudokuFrame extends JFrame {
 
@@ -39,8 +39,8 @@ public class SudokuFrame extends JFrame {
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		//TODO
-		SudokuGame game = new SudokuGame();
+		// TODO
+		Board game = null;
 		SudokuPanel sudokuPanel = new SudokuPanel();
 		SudokuController sudokuController = new SudokuController(sudokuPanel,
 				game);
