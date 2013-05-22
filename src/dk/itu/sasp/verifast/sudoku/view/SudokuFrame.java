@@ -39,6 +39,7 @@ public class SudokuFrame extends JFrame {
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		//TODO
 		SudokuGame game = new SudokuGame();
 		SudokuPanel sudokuPanel = new SudokuPanel();
 		SudokuController sudokuController = new SudokuController(sudokuPanel,

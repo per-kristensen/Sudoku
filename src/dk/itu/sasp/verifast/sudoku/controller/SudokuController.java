@@ -27,35 +27,18 @@ public class SudokuController implements ActionListener {
 			int y = field.getFieldY();
 			int number = Integer.parseInt(field.getText());
 
-			if (isValidInput(field.getText())) {
-				game.setNumber(x, y, number);
-				sudokuPanel.setNumber(x, y, number);
-			} else {
-				field.setText("");
-			}
+			//TODO
+
 		} else if (source instanceof JMenuItem) {
 			String menuItemText = ((JMenuItem) source).getText();
 			if (menuItemText.equalsIgnoreCase("new game")) {
-				this.game = new SudokuGame();
-				setGame();
+				//TODY
 				System.out.println(game.printSolution());
 			} else if (menuItemText.equalsIgnoreCase("check game")) {
-				sudokuPanel.checkGame(this.game.checkGame());
+				//TODO
 			}
 
 		}
-	}
-
-	private static boolean isValidInput(String str) {
-		try {
-			int i = Integer.parseInt(str);
-			if (i > 0 && i <= 9) {
-				return true;
-			}
-		} catch (Exception e) {
-			return false;
-		}
-		return false;
 	}
 
 	public void setGame() {

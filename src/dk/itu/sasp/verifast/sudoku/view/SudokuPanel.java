@@ -2,7 +2,6 @@ package dk.itu.sasp.verifast.sudoku.view;
 
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.io.ObjectInputStream.GetField;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
